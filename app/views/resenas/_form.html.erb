@@ -1,0 +1,27 @@
+<%= form_with(model: [@producto, resena], local: true) do |form| %>
+  <% if resena.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(resena.errors.count, "error") %> prohibited this resena from being saved:</h2>
+
+      <ul>
+        <% resena.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :calificacion %>
+    <%= form.text_field :calificacion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :contenido %>
+    <%= form.text_field :contenido %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

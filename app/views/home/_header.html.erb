@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <%= link_to "ArriendoLibre 🤑", root_path, class:"navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+        <%= link_to "Productos", productos_path, class:"nav-link" %>  
+        </li>
+        <% if usuario_signed_in? %>
+          <% if current_usuario.role == "moderador" %>
+            <li class="nav-item">
+            <%= link_to "Moderar Reservas", usuario_reservas_path(current_usuario), method: :get, class:"nav-link" %> 
+            </li>
+            <li class="nav-item">
+            <%= link_to "Moderar Reseñas", usuario_resenas_path(current_usuario), method: :get, class:"nav-link" %> 
+            </li>
+          <% else %>
+            <li class="nav-item">
+            <%= link_to "Mis Reservas", usuario_reservas_path(current_usuario), method: :get, class:"nav-link" %> 
+            </li>
+            <li class="nav-item">
+            <%= link_to "Mis Reseñas", usuario_resenas_path(current_usuario), method: :get, class:"nav-link" %> 
+            </li>
+          <% end %>
+          <li class="nav-item">
+          <%= link_to "Chat", conversations_path, method: :get, class:"nav-link" %> 
+          </li>
+          <li class="nav-item">
+          <%= link_to "Cerrar Sesión", destroy_usuario_session_path, method: :delete, class:"nav-link" %> 
+          </li>
+          <li class="nav-item">
+            <%= link_to "Editar Perfil", edit_usuario_registration_path, class:"nav-link" %> 
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Iniciar Sesión", new_usuario_session_path, class:"nav-link" %> 
+          </li>
+          <li class="nav-item">
+            <%= link_to "Registrarse", new_usuario_registration_path, class:"nav-link" %> 
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to "Sobre nosotros", home_about_path, class:"nav-link" %> 
+        </li>
+        <%# <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorías
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Fútbol</a>
+            </li>
+            <li><a class="dropdown-item" href="#">Tenis</a></li>
+            <li><a class="dropdown-item" href="#">Básquetbol</a></li>
+          </ul> %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

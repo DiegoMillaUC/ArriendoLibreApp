@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<div class="jumbotron">
+  <h1 class="display-4">
+    <%= @resena.producto.nombre %> | <%= image_tag @resena.producto.imagen,
+     width: 200 if @resena.producto.imagen.attached? %>
+  </h1>
+  <hr class="my-4">
+</div>
+
+<p>
+  <strong>Calificacion:</strong>
+  <%= @resena.calificacion %>
+</p>
+
+<p>
+  <strong>Contenido:</strong>
+  <%= @resena.contenido %>
+</p>
+
+<%= link_to 'Cancelar Reseña', usuario_resena_path(current_usuario, @resena), method: :delete, 
+data: { confirm: '¿Estás seguro?' }, class:"btn btn-dark" %>
+<%= link_to 'Back', usuario_resenas_path(current_usuario), class:"btn btn-dark" %>

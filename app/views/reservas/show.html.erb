@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<div class="jumbotron">
+  <h1 class="display-4">
+    <%= @reserva.producto.nombre %> | <%= image_tag @reserva.producto.imagen,
+     width: 200 if @reserva.producto.imagen.attached? %>
+  </h1>
+  <p class="lead"><%= @reserva.descripcion %></p>
+  <hr class="my-4">
+</div>
+
+<p>
+  <strong>Fecha inicio:</strong>
+  <%= @reserva.fecha_inicio %>
+</p>
+
+<p>
+  <strong>Fecha termino:</strong>
+  <%= @reserva.fecha_termino %>
+</p>
+
+<% if current_usuario.role == "moderador" %>
+  <% if @reserva.aceptado == 0 %>
+    <% if @reserva.producto.disponible == true %>
+      <%= link_to 'Aceptar', "/reservas/#{@reserva.id}/aceptar", class:"btn btn-success" %>
+    <% else %>
+      <p> Producto no disponible por el momento </p>
+    <% end %>
+    <%= link_to 'Rechazar', "/reservas/#{@reserva.id}/rechazar", class:"btn btn-danger" %>
+  <% end %>
+<% end %>
+<%= link_to 'Borrar Reserva', usuario_reserva_path(current_usuario, @reserva), method: :delete, 
+data: { confirm: '¿Estás seguro?' }, class:"btn btn-dark" %>
+<%= link_to 'Back', usuario_reservas_path(current_usuario), class:"btn btn-dark" %>

@@ -1,0 +1,33 @@
+
+<div class="container">
+<div class="panel panel-default">
+ <% @messages.each do |message| %>
+  <% if message.body %>
+   <% usuario = Usuario.find(message.usuario_id) %>
+   <div class="item">
+<div class="panel-heading">
+       <div class="header"><strong><%= usuario.nombre %> </strong><%= message.message_time %></div>
+      <div class="list">
+       <div class="item">
+        <i class="right triangle icon"></i>
+        <%= message.body %>
+      </div>
+    </div>
+   </div>
+ </div>
+ <% end %>
+<% end %>
+</div>
+</div>
+<div class="col-md-10 col-md-offset-1">
+<%= form_for [@conversation, @message] do |f| %>
+<div class="form-group">
+  <%= f.text_area :body, class: "form-control" %>
+</div>
+  <%= f.text_field :usuario_id, value: current_usuario.id, type: "hidden" %>
+<div class="form-group">
+  <%= f.submit "Enviar Mensaje", class: "form-control btn btn-primary" %>
+</div>
+<% end %>
+</div>
+</div>

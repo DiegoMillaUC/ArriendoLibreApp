@@ -1,0 +1,86 @@
+<p id="notice"><%= notice %></p>
+
+<div class="jumbotron">
+  <h1 class="display-4">
+    <%= @producto.nombre %> <%= image_tag @producto.imagen, width: 200 if @producto.imagen.attached? %>
+  </h1>
+  <p class="lead"><%= @producto.descripcion %></p>
+  <hr class="my-4">
+</div>
+
+<p>
+  <strong>Precio:</strong>
+  <%= @producto.precio %>
+</p>
+
+<p>
+  <strong>Categoría:</strong>
+  <%= @producto.categoria %>
+</p>
+
+<p>
+  <strong>Stock actual:</strong>
+  <%= @producto.stock_actual %>
+</p>
+
+<p>
+  <strong>Stock total:</strong>
+  <%= @producto.stock_total %>
+</p>
+
+<%= link_to 'Back', productos_path, class:"btn btn-dark"  %>
+<br/>
+<div align='center'>
+  <h3> Arrendar </h3>
+  <br/>
+  <% if current_usuario %>
+    <% if @producto.disponible %>
+      <%= link_to "Solicitar reserva", new_producto_reserva_path(@producto) , class:"btn btn-dark"%>
+    <% else %>
+      <strong> Producto no disponible por el momento </strong>
+    <% end %>
+  <% end %>
+</div>
+<br/>
+<br/>
+<br/>
+<div align='center'>
+  <h3> Reseñas </h3>
+  <br/>
+  <% if current_usuario %>
+    <% capacitado = false %>
+    <% current_usuario.reservas.each do |reserva| %>
+      <% if reserva.producto == @producto %>
+        <% capacitado = true %>
+      <% end %>
+    <% end %>
+    <% if capacitado %>
+      <%= link_to "Crear reseña", new_producto_resena_path(@producto) , class:"btn btn-dark"%>
+    <% end %>
+  <% end %>
+  <br/>
+</div>
+<br/>
+<table class="table table-striped table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Usuario</th>
+      <th>Calificacion</th>
+      <th>Descripcion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @producto.resenas.each do |resena| %>
+        <tr>
+          <td><%= resena.usuario.nombre %></td>
+          <td><%= resena.calificacion %></td>
+          <td><%= resena.contenido %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+<br/>
+<br/>
+<br/>

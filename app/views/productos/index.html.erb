@@ -1,0 +1,41 @@
+<h1>Productos</h1>
+
+<div style="padding:10px 10px 10px 10px;">
+  <div class="center">
+    <%= form_for "", url: productos_path, method: :get do |f| %>
+      <br/>
+      <%= f.label :categoria %>
+      <%= f.select :categoria_filtro, ["Todos", "Futbol", "Basquetbol", "Tenis", "Voleibol"], selected: @categoria_filtro %>
+      <%= f.submit "Filtrar", class: "link" %>
+    <% end %>
+  </div>
+</div>
+
+<table class="table table-striped table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Nombre</th>
+      <th>Imagen</th>
+      <th>Precio</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @productos.each do |producto| %>
+      <tr>
+        <td><%= producto.nombre %></td>
+        <td><%= image_tag producto.imagen, width: 100 if producto.imagen.attached? %></td>
+        <td> $ <%= producto.precio %></td>
+        <td><%= link_to 'Show', producto,  class:"btn btn-dark" %></td>
+        <%# <td><%= link_to 'Edit', edit_producto_path(producto) %>
+        <%# <td><%= link_to 'Destroy', producto, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%# <%= link_to 'New Producto', new_producto_path, class:"btn btn-dark" %>
+
