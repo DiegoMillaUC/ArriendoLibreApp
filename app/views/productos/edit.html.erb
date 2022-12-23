@@ -1,6 +1,7 @@
-<h1>Editing Producto</h1>
-<br/>
-<%= render 'form', producto: @producto %>
-<%# <br/>
-<%= link_to 'Show', @producto, class:"btn btn-dark" %> 
-<%# <%= link_to 'Back', productos_path, class:"btn btn-dark"
+<% if current_usuario.role == "moderador" %>
+    <h1>Editar Producto: </h1>
+    <br/>
+    <%= render 'form', producto: @producto %>
+    <br/>
+    <%= link_to 'Volver', productos_path, class:"btn btn-dark" %>
+<% end %>

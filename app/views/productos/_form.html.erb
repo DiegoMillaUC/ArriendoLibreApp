@@ -23,12 +23,6 @@
     <% if producto.imagen.attached? %>
       <%= image_tag producto.imagen, style: "width: 200px; display: block" %>
     <% end %>
-
-  </div>
-
-  <div class="field form-group">
-    <%= form.label :categoria %>
-    <%= form.label_field :categoria, class:"form-control" %>
   </div>
 
   <div class="field form-group">
@@ -49,6 +43,16 @@
   <div class="field form-group">
     <%= form.label :stock_total %>
     <%= form.number_field :stock_total, class:"form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :disponible %>
+    <%= form.check_box :disponible, class:"form-check" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :categoria %>
+    <%= form.text_field :categoria, class:"form-control" %>
   </div>
 
 <br/>

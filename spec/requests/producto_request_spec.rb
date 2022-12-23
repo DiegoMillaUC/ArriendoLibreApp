@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+include AuthHelper
 
 RSpec.describe Producto, type: :request do
+  before(:each) do
+    login_usuario
+  end
   before(:all) do
     @producto = create(:producto)
     @producto.save

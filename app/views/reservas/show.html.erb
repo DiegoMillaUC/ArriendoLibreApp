@@ -1,9 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <div class="jumbotron">
+  <strong>Productos:</strong>
   <h1 class="display-4">
-    <%= @reserva.producto.nombre %> | <%= image_tag @reserva.producto.imagen,
-     width: 200 if @reserva.producto.imagen.attached? %>
+    <% @reserva.carro_items.each do |carro_item| %>
+      <%= carro_item.producto.nombre  %>  <%= image_tag carro_item.producto.imagen, width: 50 if carro_item.producto.imagen.attached? %>
+      <br/>
+    <% end %>
   </h1>
   <p class="lead"><%= @reserva.descripcion %></p>
   <hr class="my-4">
@@ -21,7 +24,7 @@
 
 <% if current_usuario.role == "moderador" %>
   <% if @reserva.aceptado == 0 %>
-    <% if @reserva.producto.disponible == true %>
+    <% if @reserva.productos.all? { |producto| producto.disponible == true }%>
       <%= link_to 'Aceptar', "/reservas/#{@reserva.id}/aceptar", class:"btn btn-success" %>
     <% else %>
       <p> Producto no disponible por el momento </p>
@@ -31,4 +34,4 @@
 <% end %>
 <%= link_to 'Borrar Reserva', usuario_reserva_path(current_usuario, @reserva), method: :delete, 
 data: { confirm: '¿Estás seguro?' }, class:"btn btn-dark" %>
-<%= link_to 'Back', usuario_reservas_path(current_usuario), class:"btn btn-dark" %>
+<%= link_to 'Volver', usuario_reservas_path(current_usuario), class:"btn btn-dark" %>

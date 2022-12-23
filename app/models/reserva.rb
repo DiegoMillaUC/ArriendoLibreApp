@@ -3,7 +3,6 @@
 class Reserva < ApplicationRecord
   validates :descripcion, :fecha_inicio, :fecha_termino, presence: true
   belongs_to :usuario
-  belongs_to :producto
   validate :valid_dates
 
   def valid_dates
@@ -13,4 +12,6 @@ class Reserva < ApplicationRecord
       errors.add :fecha_inicio, ' debe ser válida'
     end
   end
+  has_many :carro_items, dependent: :destroy
+  has_many :productos, through: :carro_items
 end

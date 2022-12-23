@@ -17,7 +17,7 @@ ActiveAdmin.register Reserva do
   # end
 
   action_item :aceptar, only: :show do
-    if reserva.producto.disponible? && reserva.aceptado.zero?
+    if reserva.aceptado.zero? && reserva.productos.all? { |producto| producto.disponible == true }
       link_to 'Aceptar', aceptar_admin_reserva_path(reserva),
               method: :put
     end
@@ -26,12 +26,13 @@ ActiveAdmin.register Reserva do
   member_action :aceptar, method: :put do
     reserva = Reserva.find(params[:id])
     reserva.update(aceptado: 2)
-    reserva.producto.update_attributes(stock_actual: reserva.producto.stock_actual - 1)
-    reserva.producto.update_attributes(disponible: false) if reserva.producto.stock_actual.zero?
     redirect_to admin_reserva_path(reserva)
   end
 
   action_item :rechazar, only: :show do
+    reserva.carro_items.each do |item|
+      item.producto.update_attributes(stock_actual: item.producto.stock_actual + item.cantidad)
+    end
     link_to 'Rechazar', rechazar_admin_reserva_path(reserva), method: :put if reserva.aceptado.zero?
   end
 

@@ -7,5 +7,3 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 AdminUser.create!(email: 'grupo76@uc.cl', password: 'admin76', password_confirmation: 'admin76')
-Usuario.create!(email: 'diegom@uc.cl', encrypted_password:'123123', nombre: 'Diego', telefono: '123123123')
-Usuario.create!(email: 'clementet@uc.cl', encrypted_password:'123123', nombre: 'Clemente', telefono: '123123123')

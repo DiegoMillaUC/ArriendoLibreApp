@@ -2,7 +2,7 @@
 
 <div class="jumbotron">
   <h1 class="display-4">
-    <%= @resena.producto.nombre %> | <%= image_tag @resena.producto.imagen,
+    <%= @resena.producto.nombre %>  <%= image_tag @resena.producto.imagen,
      width: 200 if @resena.producto.imagen.attached? %>
   </h1>
   <hr class="my-4">
@@ -18,6 +18,8 @@
   <%= @resena.contenido %>
 </p>
 
-<%= link_to 'Cancelar Reseña', usuario_resena_path(current_usuario, @resena), method: :delete, 
-data: { confirm: '¿Estás seguro?' }, class:"btn btn-dark" %>
-<%= link_to 'Back', usuario_resenas_path(current_usuario), class:"btn btn-dark" %>
+<% if current_usuario.id == @resena.usuario_id %>
+  <%= link_to 'Cancelar Reseña', usuario_resena_path(current_usuario, @resena), method: :delete, 
+  data: { confirm: '¿Estás seguro?' }, class:"btn btn-dark" %>
+<% end %>
+<%= link_to 'Volver', usuario_resenas_path(current_usuario), class:"btn btn-dark" %>

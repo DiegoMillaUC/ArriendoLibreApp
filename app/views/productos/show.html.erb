@@ -28,17 +28,25 @@
   <%= @producto.stock_total %>
 </p>
 
-<%= link_to 'Back', productos_path, class:"btn btn-dark"  %>
+<%= link_to 'Volver', productos_path, class:"btn btn-dark"  %>
+<% if current_usuario %>
+  <% if current_usuario.role == "moderador" %>
+    <%= link_to 'Edit', edit_producto_path(@producto), class:"btn btn-dark" %> 
+    <%= link_to 'Destroy', producto_path(@producto), method: :delete, data: { confirm: 'Estás seguro?' }, class:"btn btn-dark" %>
+  <% end %>
+<% end %>
 <br/>
 <div align='center'>
   <h3> Arrendar </h3>
   <br/>
   <% if current_usuario %>
     <% if @producto.disponible %>
-      <%= link_to "Solicitar reserva", new_producto_reserva_path(@producto) , class:"btn btn-dark"%>
+      <%= button_to "Añadir al carro", carro_items_path(:producto_id => @producto.id), class:"btn btn-dark"%>
     <% else %>
       <strong> Producto no disponible por el momento </strong>
     <% end %>
+  <% else %>
+      <strong> Debes iniciar sesión </strong>
   <% end %>
 </div>
 <br/>
@@ -50,7 +58,7 @@
   <% if current_usuario %>
     <% capacitado = false %>
     <% current_usuario.reservas.each do |reserva| %>
-      <% if reserva.producto == @producto %>
+      <% if reserva.productos.include?(@producto)%>
         <% capacitado = true %>
       <% end %>
     <% end %>

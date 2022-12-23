@@ -4,11 +4,9 @@ class ResenasController < ApplicationController
   before_action :authenticate_usuario!
 
   def index
-    @resenas = Array.new
+    @resenas = []
     Resena.all.each do |resena|
-      if resena.usuario_id == current_usuario.id
-        @resenas << resena
-      end
+      @resenas << resena if resena.usuario_id == current_usuario.id
     end
     @resenas
   end

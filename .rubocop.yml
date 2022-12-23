@@ -1,5 +1,6 @@
 AllCops:
   NewCops: enable
+  SuggestExtensions: false
   Exclude:
     - 'vendor/**/*'
     - 'test/fixtures/**/*'
@@ -11,16 +12,9 @@ AllCops:
     - 'config/environments/*'
     - 'node_modules/**/*'
 
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/requests/producto_request_spec.rb'
-    - 'spec/requests/reserva_request_spec.rb'
-    - 'spec/requests/usuario_request_spec.rb'
-    - 'spec/factories.rb'
-
 # Layout
 Layout/LineLength:
-  Max: 120
+  Max: 140
   Enabled: true
 Layout/AssignmentIndentation:
   Enabled: true
@@ -76,6 +70,10 @@ Style/DoubleNegation:
   Enabled: true
 Style/EmptyElse:
   Enabled: true
+Style/MixinUsage:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
 
 # Lint
 Lint/AmbiguousAssignment:
@@ -97,7 +95,7 @@ Lint/UnusedMethodArgument:
 Lint/UselessAssignment:
   Enabled: true
 Lint/EmptyBlock:
-  Enabled: true
+  Enabled: false
 Lint/AssignmentInCondition:
   Enabled: true
 Lint/EmptyExpression:
@@ -108,3 +106,24 @@ Lint/ShadowedArgument:
 ### Añade aquí todos los Cops que quieras:
 Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/requests/producto_request_spec.rb'
+    - 'spec/requests/reserva_request_spec.rb'
+    - 'spec/requests/usuario_request_spec.rb'
+    - 'spec/factories.rb'
+    - 'config/routes.rb'
+    - 'spec/controllers/carro_item_controller_spec.rb'
+    - 'spec/controllers/reserva_controller_spec.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/controllers/carro_items_controller.rb'
+    - 'app/controllers/reservas_controller.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+    - 'app/controllers/carro_items_controller.rb'
+    - 'app/controllers/reservas_controller.rb'

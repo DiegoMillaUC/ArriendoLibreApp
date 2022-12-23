@@ -6,23 +6,23 @@ class ReservasController < ApplicationController
   def aceptar
     @reserva = Reserva.find(params[:id])
     @reserva.update(aceptado: 2)
-    @reserva.producto.update_attributes(stock_actual: @reserva.producto.stock_actual - 1)
-    @reserva.producto.update_attributes(disponible: false) if @reserva.producto.stock_actual.zero?
-    redirect_to usuario_resenas_path(current_usuario)
+    redirect_to usuario_reservas_path(current_usuario)
   end
 
   def rechazar
     @reserva = Reserva.find(params[:id])
+    @reserva.carro_items.each do |item|
+      item.producto.update_attributes(stock_actual: item.producto.stock_actual + item.cantidad)
+      item.producto.update_attributes(disponible: true)
+    end
     @reserva.update(aceptado: 1)
-    redirect_to usuario_resenas_path(current_usuario)
+    redirect_to usuario_reservas_path(current_usuario)
   end
 
   def index
-    @reservas = Array.new
+    @reservas = []
     Reserva.all.each do |reserva|
-      if reserva.usuario_id == current_usuario.id
-        @reservas << reserva
-      end
+      @reservas << reserva if reserva.usuario_id == current_usuario.id
     end
     @reservas
   end
@@ -34,18 +34,28 @@ class ReservasController < ApplicationController
   # GET /reservas/new
   def new
     @reserva = Reserva.new
-    @producto = Producto.find(params[:producto_id])
+    @carro_items = @carro_actual.carro_items
   end
 
   # POST /reservas or /reservas.json
   def create
-    @producto = Producto.find(params[:producto_id])
     @reserva = Reserva.new(reserva_params)
     @reserva.usuario_id = current_usuario.id
-    @reserva.producto = @producto
-
+    @carro_actual.carro_items.each do |item|
+      @reserva.carro_items << item
+      item.carro_id = nil
+      # item.producto.update_attributes(stock_actual: item.producto.stock_actual - item.cantidad)
+      # item.producto.update_attributes(disponible: false) if item.producto.stock_actual.zero?
+    end
     if @reserva.save
-      redirect_to producto_path(@reserva.producto.id)
+      @carro_actual.carro_items.each do |item|
+        # item.carro_id = nil
+        item.producto.update_attributes(stock_actual: item.producto.stock_actual - item.cantidad)
+        item.producto.update_attributes(disponible: false) if item.producto.stock_actual.zero?
+      end
+      Carro.destroy(session[:carro_id])
+      session[:carro_id] = nil
+      redirect_to root_path
     else
       render :new
     end
@@ -66,10 +76,10 @@ class ReservasController < ApplicationController
   def destroy
     @reserva = Reserva.find(params[:id])
     @reserva.destroy
-    redirect_to producto_path(@reserva.producto)
+    redirect_to root_path
   end
-
   # Only allow a list of trusted parameters through.
+
   private
 
   def reserva_params

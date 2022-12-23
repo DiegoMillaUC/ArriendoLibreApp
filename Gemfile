@@ -69,4 +69,10 @@ gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'activeadmin'
 gem 'inherited_resources'
 
+# aws
+gem 'aws-sdk-s3', require: false
+
+# Style for activeadmin
 gem 'active_admin_flat_skin'
+
+gem 'httparty'

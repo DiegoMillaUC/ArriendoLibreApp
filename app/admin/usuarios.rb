@@ -18,4 +18,17 @@ ActiveAdmin.register Usuario do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+
+  action_item :moderador, only: :show do
+    if usuario.role == 'cliente'
+      link_to 'Hacer Moderador', moderador_admin_usuario_path(usuario),
+              method: :put
+    end
+  end
+
+  member_action :moderador, method: :put do
+    usuario = Usuario.find(params[:id])
+    usuario.update(role: 1)
+    redirect_to admin_usuario_path(usuario)
+  end
 end

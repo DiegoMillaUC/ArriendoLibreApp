@@ -7,6 +7,6 @@ class Producto < ApplicationRecord
   validates :stock_actual, numericality: { only_integer: true, greater_than: -1 }
   validates :stock_actual, numericality: { only_integer: true, less_than_or_equal_to: :stock_total }
   validates :stock_total, numericality: { only_integer: true, greater_than: -1 }
-  has_many :reservas
+  has_many :carro_items, dependent: :destroy
   has_many :resenas
 end

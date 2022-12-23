@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_09_221420) do
+ActiveRecord::Schema.define(version: 2022_11_13_223752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,9 +62,29 @@ ActiveRecord::Schema.define(version: 2022_11_09_221420) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "carro_items", force: :cascade do |t|
+    t.integer "cantidad"
+    t.integer "producto_id"
+    t.integer "carro_id"
+    t.integer "reserva_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "carros", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "conversations", force: :cascade do |t|
     t.integer "sender_id"
     t.integer "recipient_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "datos", force: :cascade do |t|
+    t.string "dato1"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -110,8 +130,6 @@ ActiveRecord::Schema.define(version: 2022_11_09_221420) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "usuario_id", null: false
-    t.bigint "producto_id", null: false
-    t.index ["producto_id"], name: "index_reservas_on_producto_id"
     t.index ["usuario_id"], name: "index_reservas_on_usuario_id"
   end
 
@@ -133,6 +151,5 @@ ActiveRecord::Schema.define(version: 2022_11_09_221420) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "resenas", "productos"
   add_foreign_key "resenas", "usuarios"
-  add_foreign_key "reservas", "productos"
   add_foreign_key "reservas", "usuarios"
 end

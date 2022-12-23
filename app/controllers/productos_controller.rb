@@ -13,13 +13,12 @@ class ProductosController < ApplicationController
                  end
   end
 
-  # GET /productos/1 or /productos/1.json
-  def show; end
-
-  # GET /productos/new
   def new
     @producto = Producto.new
   end
+
+  # GET /productos/1 or /productos/1.json
+  def show; end
 
   # GET /productos/1/edit
   def edit; end

@@ -5,10 +5,9 @@
 <table class="table table-striped table-bordered table-hover">
   <thead class="thead-dark">
     <tr>
-      <th>Producto</th>
+      <th>Fecha Reserva</th>
       <th>Estado</th>
       <th>Ver detalle</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -16,7 +15,7 @@
     <% if current_usuario.role == "moderador" %>
       <% Reserva.all.each do |reserva| %>
         <tr>
-          <td><%= reserva.producto.nombre %></td>
+          <td><%= reserva.fecha_inicio %></td>
           <td><% if reserva.aceptado == 0 %>
                 En revisión
             <% elsif reserva.aceptado == 1 %>
@@ -30,7 +29,7 @@
     <% else %>
       <% @reservas.each do |reserva| %>
         <tr>
-          <td><%= reserva.producto.nombre %></td>
+          <td><%= reserva.fecha_inicio %></td>
           <td><% if reserva.aceptado == 0 %>
                   En revisión
               <% elsif reserva.aceptado == 1 %>
